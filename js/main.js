@@ -2,7 +2,7 @@
 
 
 
-var urlCampeones = "http://ddragon.leagueoflegends.com/cdn/12.12.1/data/en_US/champion.json";
+var urlCampeones = "http://ddragon.leagueoflegends.com/cdn/13.1.1/data/en_US/champion.json";
 var campeonesJSON;
 
 var divContenedor = document.getElementById("contenedor");
