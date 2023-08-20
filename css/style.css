@@ -3,7 +3,7 @@
 
 .zoom{
 
-    transition: transform 0.2s;
+    transition: transform 0.3s;
 
 }
 
@@ -11,6 +11,15 @@
 
     transform: scale(1.2);
 
+}
+
+
+.brightnes{
+    transition: filter 0.4s;
+}
+
+.brightnes:hover{
+    filter: brightness(0.5);
 }
 
 

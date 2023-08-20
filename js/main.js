@@ -19,6 +19,7 @@ $.ajax({
 
 
 var urlCampeones = "http://ddragon.leagueoflegends.com/cdn/"+ version +"/data/en_US/champion.json";
+var urlHechizos = "http://ddragon.leagueoflegends.com/cdn/"+version+"/data/en_US/summoner.json";
 var campeonesJSON;
 
 var divContenedor = document.getElementById("contenedor");
@@ -30,6 +31,88 @@ var campeonesSeleccionados = 0;
 
 
 
+function actualizarCuentaRegresiva() {
+    var parrafos = document.querySelectorAll(".cuentaRegresiva");
+    
+    parrafos.forEach(function(parrafo) {
+      var segundos = parseInt(parrafo.getAttribute("data-segundos"));
+      
+      if (segundos > 0) {
+        segundos--;
+        parrafo.setAttribute("data-segundos", segundos);
+        parrafo.textContent = segundos;
+      } else {
+        parrafo.parentNode.children[0].style.filter = "brightness( 1 )";
+        parrafo.parentNode.removeChild(parrafo); // Remover el párrafo cuando segundos llega a cero
+      }
+    });
+  }
+  
+  setInterval(actualizarCuentaRegresiva, 1000); // Ejecutar la función cada 1 segundo
+
+
+function mostrarCooldown( idElemento, cooldown ){
+
+    
+    if ( ! (document.getElementById(idElemento).children[1]) ) {
+        var cooldownParrafo = document.createElement('p');
+        cooldownParrafo.innerHTML = cooldown;
+        cooldownParrafo.style.color = 'white';
+        cooldownParrafo.className = 'cuentaRegresiva position-absolute top-50 start-50 translate-middle';
+        cooldownParrafo.setAttribute("data-segundos", cooldown);
+        
+        document.getElementById(idElemento).append(cooldownParrafo);
+        document.getElementById(idElemento).children[0].style.filter = "brightness( 0.4 )";
+    }else{
+        document.getElementById(idElemento).children[1].parentNode.children[0].style.filter = "brightness( 1 )";
+        document.getElementById(idElemento).children[1].remove();
+    }
+
+
+
+}
+
+
+function seleccionarHechizos(idElemento){
+
+    var padre = document.getElementById(idElemento).parentNode;
+    var contador = 0;
+
+    for(i=0; i < padre.children.length; i++){
+        if(padre.children[i].getAttribute("data-seleccionado") == 'true'){
+            contador++;
+        }
+    }
+    
+     if ( document.getElementById(idElemento).getAttribute("data-seleccionado") == 'false' && contador < 2 ) {
+        document.getElementById(idElemento).setAttribute( "data-seleccionado", true );
+        document.getElementById(idElemento).style.filter = "brightness( 0.4 )";
+     }else{
+        document.getElementById(idElemento).setAttribute( "data-seleccionado", false );
+        document.getElementById(idElemento).style.filter = "brightness( 1 )";
+        contador--;
+     }
+    
+     //console.log(contador);
+
+     if(contador == 1){
+
+        for(var i = padre.children.length - 1; i >= 0; i--){
+            
+            if(padre.children[i].getAttribute("data-seleccionado") == 'false'){
+                padre.children[i].remove();
+            }else{
+                padre.children[i].className = "col-6 p-0 position-relative mx-auto";
+                padre.children[i].style.filter = "brightness( 1 )";
+                padre.children[i].setAttribute('onclick', 'mostrarCooldown( "'+padre.children[i].id+'", '+ document.getElementById(padre.children[i].id).getAttribute('data-cooldown') +' )' );
+                
+            }
+        }
+
+     }
+
+}
+
 
 function agregarAlArreglo( idElemento, idContenedor ){
 
@@ -38,7 +121,7 @@ function agregarAlArreglo( idElemento, idContenedor ){
     var contenedor = document.getElementById(idContenedor);
     var estaEnElArreglo = false;
 
-    console.log(idElemento);
+    
     //Revisamos que no este repetido
     for(i=0; i< contenedor.children.length ; i++){
         if( (contenedor.children[i].id) == elemento.id + "copy" ){
@@ -49,17 +132,35 @@ function agregarAlArreglo( idElemento, idContenedor ){
 
     //Se agrega al contenedor
     if (campeonesSeleccionados < 5 && !estaEnElArreglo) {
+
         
         var contenidoDeElemento = elemento.innerHTML;
+        var divConHechizos = document.getElementById("hechizos").innerHTML;
+        var divRow = document.createElement("div");
+        divRow.className = "container";
+        divRow.innerHTML = divConHechizos;
+
+
+        for(i = 0; i < document.getElementById('hechizos').children[0].children.length; i++){
+            
+            divRow.children[0].children[i].id = idElemento + "h" +i;
+            divRow.children[0].children[i].setAttribute('onclick', 'seleccionarHechizos("'+ divRow.children[0].children[i].id +'")' );
+            //'mostrarCooldown( "'+idElemento + "h" +i+'" , '+divRow.children[0].children[i].getAttribute("data-cooldown")+' )'
+
+        }
+
 
         var elementoCopia = document.createElement("div");
         elementoCopia.innerHTML = contenidoDeElemento;
-        elementoCopia.className = "col-2 p-0 m-auto";
+        elementoCopia.className = "container col-2 p-0 m-auto";
         elementoCopia.id = elemento.id + "copy"
-        elementoCopia.addEventListener('click', function(){elementoCopia.remove(); campeonesSeleccionados--;});
+        elementoCopia.children[0].addEventListener('click', function(){elementoCopia.remove(); campeonesSeleccionados--;});
+        elementoCopia.append(divRow);
         
         contenedor.append(elementoCopia);
         campeonesSeleccionados++;
+
+
 
     }else if(estaEnElArreglo){
 
@@ -73,7 +174,7 @@ function agregarAlArreglo( idElemento, idContenedor ){
 
 
 
-
+//Trae la lista de campeones.
 $.getJSON(urlCampeones, function(data) {
     // JSON result in `data` variable
 
@@ -87,9 +188,9 @@ $.getJSON(urlCampeones, function(data) {
     for(let i = 0; i < array.length; i++){
 
         var columna = document.createElement("div");
-        columna.setAttribute("id", "j"+i);
+        columna.setAttribute("id", "campeon"+i);
         columna.className = "col-1 p-0";
-        columna.setAttribute('onclick', 'agregarAlArreglo( "j'+i+'", "divSeleccionados")' );
+        columna.setAttribute('onclick', 'agregarAlArreglo( "campeon'+i+'", "divSeleccionados")' );
         
 
         var img = document.createElement("img");
@@ -108,6 +209,49 @@ $.getJSON(urlCampeones, function(data) {
 });
 
 
+
+
+//Trae la lista de hechizos.
+$.getJSON(urlHechizos, function(data) {
+    // JSON result in `data` variable
+
+    var array = Object.values(data["data"]);
+
+    var fila = document.createElement("div");
+        fila.className = "row mt-2";
+        var idRow = 1;
+        //fila.setAttribute("id", "i" + idRow);
+
+    for(let i = 0; i < array.length; i++){
+
+        if (i != 2 && i != 3 && i!= 10 && i!= 11 && i!= 13 && i!= 16 && i!= 17) {
+            
+
+            var columna = document.createElement("div");
+            columna.setAttribute("id", "h"+i);
+            columna.className = "col-3 p-0 position-relative mx-auto";
+            columna.setAttribute( "data-cooldown", array[i].cooldown[0] );
+            columna.setAttribute( "data-seleccionado", false );
+
+            var img = document.createElement("img");
+            img.src = "http://ddragon.leagueoflegends.com/cdn/"+ version +"/img/spell/" + array[i].id + ".png";
+            img.className = "img-fluid brightnes rounded-3 p-1 m-0 "
+            
+
+            columna.append(img);
+
+            
+            fila.append(columna);
+
+
+        }
+
+        
+    }
+    
+    hechizos.append(fila);
+    
+});
 
 
 
