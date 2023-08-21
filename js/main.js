@@ -156,6 +156,8 @@ function agregarAlArreglo( idElemento, idContenedor ){
         elementoCopia.id = elemento.id + "copy"
         elementoCopia.children[0].addEventListener('click', function(){elementoCopia.remove(); campeonesSeleccionados--;});
         elementoCopia.append(divRow);
+        elementoCopia.setAttribute("data-aos" ,"fade");
+        elementoCopia.setAttribute("data-aos-duration","2600");
         
         contenedor.append(elementoCopia);
         campeonesSeleccionados++;
@@ -191,7 +193,8 @@ $.getJSON(urlCampeones, function(data) {
         columna.setAttribute("id", "campeon"+i);
         columna.className = "col-1 p-0";
         columna.setAttribute('onclick', 'agregarAlArreglo( "campeon'+i+'", "divSeleccionados")' );
-        
+        columna.setAttribute("data-aos" ,"fade");
+        columna.setAttribute("data-aos-duration","2600");
 
         var img = document.createElement("img");
         img.src = "http://ddragon.leagueoflegends.com/cdn/"+ version +"/img/champion/" + array[i].id + ".png";
@@ -255,30 +258,14 @@ $.getJSON(urlHechizos, function(data) {
 
 
 
-/*function imprimir ( contenedor, cantidad ){
-
-    for (let i = 0; i < cantidad; i++) {
-
-        var fila = document.createElement("div");
-        fila.className = "row";
-        fila.setAttribute("id", "i"+i);
-        
-        contenedor.append(fila);
-
-        for(let j = 0; j < 12; j++){
-
-            var columna = document.createElement("h3");
-            columna.innerHTML = "A";
-            columna.setAttribute("id", "j"+j);
-            columna.className = "col";
-                
-            fila.append(columna);
-        }
-
-        
-    }
-
-}
-
-
-imprimir( divContenedor, 5 );*/ 
+$(document).ready(function() {
+    var pantallaCarga = $("#pantalla-carga");
+  
+    // Mostrar pantalla de carga al principio.
+    pantallaCarga.fadeIn();
+  
+    // Temporizador para ocultar la pantalla de carga.
+    setTimeout(function() {
+      pantallaCarga.fadeOut();
+    }, 2600); 
+  });
