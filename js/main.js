@@ -1,8 +1,4 @@
-
-
-
 var version;
-
 
 /*Guarda la version actualizada en una variable.*/
 $.ajax({
@@ -17,7 +13,7 @@ $.ajax({
     }
   });
 
-
+const myModal = document.getElementById('exampleModal');
 var urlCampeones = "http://ddragon.leagueoflegends.com/cdn/"+ version +"/data/en_US/champion.json";
 var urlHechizos = "http://ddragon.leagueoflegends.com/cdn/"+version+"/data/en_US/summoner.json";
 var campeonesJSON;
@@ -152,7 +148,7 @@ function agregarAlArreglo( idElemento, idContenedor ){
 
         var elementoCopia = document.createElement("div");
         elementoCopia.innerHTML = contenidoDeElemento;
-        elementoCopia.className = "container col-2 p-0 m-auto";
+        elementoCopia.className = "container col-2 p-3 m-auto";
         elementoCopia.id = elemento.id + "copy"
         elementoCopia.children[0].addEventListener('click', function(){elementoCopia.remove(); campeonesSeleccionados--;});
         elementoCopia.append(divRow);
@@ -174,6 +170,9 @@ function agregarAlArreglo( idElemento, idContenedor ){
 
 }
 
+function mostrarModal(){
+    $("#exampleModal").modal('show');
+}
 
 
 //Trae la lista de campeones.
@@ -191,7 +190,7 @@ $.getJSON(urlCampeones, function(data) {
 
         var columna = document.createElement("div");
         columna.setAttribute("id", "campeon"+i);
-        columna.className = "col-1 p-0";
+        columna.className = "col-1 p-0 shadow-lg";
         columna.setAttribute('onclick', 'agregarAlArreglo( "campeon'+i+'", "divSeleccionados")' );
         columna.setAttribute("data-aos" ,"fade");
         columna.setAttribute("data-aos-duration","2600");
@@ -267,5 +266,9 @@ $(document).ready(function() {
     // Temporizador para ocultar la pantalla de carga.
     setTimeout(function() {
       pantallaCarga.fadeOut();
+      
+      //Muestra el modal de instrucciones.
+      mostrarModal();
+
     }, 2600); 
   });

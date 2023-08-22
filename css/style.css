@@ -1,4 +1,25 @@
 
+header {
+  background-color: #1a1a1a;
+  padding: 10px 0;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+nav li {
+  margin: 0 20px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
 
 
 .zoom{
@@ -25,7 +46,7 @@
 
 .bgImage{
 
-    background-image: url("../img/5.png");
+  background-color: #f0f0f0;
 
 /* Full height */
   height: 100%;
@@ -34,6 +55,41 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+
+.texturaRed{
+  background-image: url("../img/textura2.png");
+}
+
+
+.redLink{
+  color: white;
+  transition: color .7s;
+}
+
+.redLink:hover {
+  color: #e91e63;
+  transition: color .7s;
+}
+
+.redButton {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #e91e63;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.redButton:hover{
+  background-color: #c71b54;
+  color: #fff;
+}
+
+.footer{
+  background-color: #1a1a1a;
 }
 
 

@@ -13,8 +13,8 @@
     <link rel="icon" type="image/x-icon" href="./img/ico.png">
     
     <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+        
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
@@ -22,6 +22,17 @@
 </head>
 <body class="bgImage">
     
+    <header class="shadow-lg">
+      <nav>
+        <ul class="my-2">
+          <li><a class="redLink" href="./index.html">Inicio</a></li>
+          <li><a class="redLink" href="#" onclick="mostrarModal()">Instrucciones</a></li>
+          <li><a class="redLink" href="https://github.com/martinnuy/cooldowns" target="_blank">Repositorio</a></li>
+        </ul>
+      </nav>
+    </header>
+
+
     <div id="pantalla-carga">
         <div class="spinner"></div>
       </div>
@@ -31,9 +42,67 @@
     
 
 
-    <div class="container text-center my-3">
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
 
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-interval="false" data-ride="carousel" data-pause="hover">
+          <div class="carousel-inner">
+            <div class="carousel-item px-5 active">
+              
+              <h2 class="px-3">Introducción</h2>
+              <p class="px-3">Esta es una herramienta que te permite controlar manualmente los cooldowns del enemigo.</p>
+
+            </div>
+            <div class="carousel-item px-5">
+              
+              <h2 class="px-3">Paso 1</h2>
+              <p class="px-3">Selecciona los campeones enemigos.</p>
+              <div class="d-flex justify-content-center"><img src="./img/step1.png" alt="" class="img-fluid"></div>
+              
+            </div>
+            <div class="carousel-item px-5">
+              <h2 class="px-3">Paso 2</h2>
+              <p class="px-3">Para cada uno de los enemigos selecciona sus hechizos de invocador.</p>
+              <div class="d-flex justify-content-center"><img src="./img/step2.png" alt="" class="img-fluid"></div>
+            </div>
+            <div class="carousel-item px-5">
+              <h2 class="px-3">Paso 3</h2>
+              <p class="px-3">Al hacer click en los hechizos seleccionados comenzara la cuenta atras. El temporizador puede reiniciarse si clickea una segunda vez en el hechizo.</p>
+              <div class="d-flex justify-content-center"><img src="./img/step3.png" alt="" class="img-fluid"></div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn redButton" data-bs-dismiss="modal">Entendido</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+    <div class="texturaRed shadow-lg">
+      <div class="container text-center my-3">
         <div class="row" id="divSeleccionados"></div>
+      </div>
     </div>
 
 
@@ -45,12 +114,12 @@
     <div class="container invisible" id="hechizos"></div>
 
 
-    <div class="text-center footer mt-0">
+    <div class="text-center footer mt-0 fixed-bottom shadow-lg">
       
         
-        <div>
-          <a class="px-1 text-secondary" style="text-decoration: none;" href="https://github.com/martinnuy" target="_blank">Github</a>
-          <a class="px-1 text-secondary" style="text-decoration: none;" href="https://www.linkedin.com/in/martinnuy/" target="_blank">Linkedin</a>
+        <div class="mt-3">
+          <a class="px-1 redLink" style="text-decoration: none;" href="https://github.com/martinnuy" target="_blank">Github</a>
+          <a class="px-1 redLink" style="text-decoration: none;" href="https://www.linkedin.com/in/martinnuy/" target="_blank">Linkedin</a>
         </div>
   
         <div>
@@ -64,9 +133,13 @@
 
 
 
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    
+    <!--Jquery-->
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+        
     <script src="./js/main.js"></script>
 
 
