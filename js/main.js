@@ -98,7 +98,7 @@ function seleccionarHechizos(idElemento){
             if(padre.children[i].getAttribute("data-seleccionado") == 'false'){
                 padre.children[i].remove();
             }else{
-                padre.children[i].className = "col-6 p-0 position-relative mx-auto";
+                padre.children[i].className = "col-6 col-md-6 p-0 position-relative mx-auto";
                 padre.children[i].style.filter = "brightness( 1 )";
                 padre.children[i].setAttribute('onclick', 'mostrarCooldown( "'+padre.children[i].id+'", '+ document.getElementById(padre.children[i].id).getAttribute('data-cooldown') +' )' );
                 
@@ -148,7 +148,7 @@ function agregarAlArreglo( idElemento, idContenedor ){
 
         var elementoCopia = document.createElement("div");
         elementoCopia.innerHTML = contenidoDeElemento;
-        elementoCopia.className = "container col-2 p-3 m-auto";
+        elementoCopia.className = "container col-12 col-md-2 p-3 changeSize m-auto";
         elementoCopia.id = elemento.id + "copy"
         elementoCopia.children[0].addEventListener('click', function(){elementoCopia.remove(); campeonesSeleccionados--;});
         elementoCopia.append(divRow);
@@ -190,7 +190,7 @@ $.getJSON(urlCampeones, function(data) {
 
         var columna = document.createElement("div");
         columna.setAttribute("id", "campeon"+i);
-        columna.className = "col-1 p-0 shadow-lg";
+        columna.className = "col-3 col-sm-2 col-md-1 p-0 shadow-lg";
         columna.setAttribute('onclick', 'agregarAlArreglo( "campeon'+i+'", "divSeleccionados")' );
         columna.setAttribute("data-aos" ,"fade");
         columna.setAttribute("data-aos-duration","2600");
@@ -231,7 +231,7 @@ $.getJSON(urlHechizos, function(data) {
 
             var columna = document.createElement("div");
             columna.setAttribute("id", "h"+i);
-            columna.className = "col-3 p-0 position-relative mx-auto";
+            columna.className = "col-4 col-md-4 col-lg-3 p-0 position-relative mx-auto";
             columna.setAttribute( "data-cooldown", array[i].cooldown[0] );
             columna.setAttribute( "data-seleccionado", false );
 

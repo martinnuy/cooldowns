@@ -119,3 +119,19 @@ nav a {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* Cambio de padding en pantallas de hasta 768px de ancho */
+
+@media (max-width: 590px) {
+  .changeSize {
+    padding-left: 150px !important;
+    padding-right: 150px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .changeSize {
+    padding-left: 100px !important;
+    padding-right: 100px !important;
+  }
+}
